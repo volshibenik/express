@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const router = express.Router();
 
 const path = require('path');
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/admin', (req, res) => {
+router.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname+'/index.html'));
 })
 
@@ -17,12 +18,12 @@ const json = {
   b:44
 }
 
-app.get('/json', (req, res) => {
+router.get('/json', (req, res) => {
   res.json(json);
 })
 
 
-app.use(express.static('public'))
+app.use('/', router);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
