@@ -1,30 +1,21 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-const router = express.Router();
+var http = require("http");
 
-const path = require('path');
+http.createServer(function(req, res) {
+  // Homepage
+  if (req.url === "/") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end("Welcome to the homepage!");
+  }
 
-router.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  // About page
+  else if (req.url === "/about") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end("Welcome to the about page!");
+  }
 
-router.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname+'/index.html'));
-})
-
-const json = {
-  a: 22,
-  b:44
-}
-
-router.get('/json', (req, res) => {
-  res.json(json);
-})
-
-
-app.use('/', router);
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  // 404'd!
+  else {
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("404 error! File not found.");
+  }
+}).listen(1337, "localhost");
